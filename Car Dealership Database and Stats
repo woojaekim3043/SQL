@@ -19,7 +19,6 @@ INSERT INTO cars VALUES
 (114, "Honda", "Insight", "Sedan", 25760),
 (115, "Ford", "Explorer", "SUV", 53070);
 
-
 --Display the database ordered by price. 
 SELECT * 
 FROM cars 
