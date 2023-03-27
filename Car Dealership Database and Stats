@@ -1,0 +1,36 @@
+--Create a car dealership database.
+CREATE TABLE cars (id INTEGER PRIMARY KEY, brand TEXT, model TEXT, type TEXT, price INTEGER);
+
+INSERT INTO cars VALUES
+(101, "Toyota", "Avalon", "Sedan", 36275),
+(102, "Toyota", "Belta", "Sedan", 12000),
+(103, "Honda", "Accord", "Sedan", 27295),
+(104, "Honda", "CR-V", "SUV", 28410),
+(105, "Honda", "Civic", "Sedan", 23450),
+(106, "Honda", "Passport", "SUV", 41100),
+(107, "Honda", "Civic Type R", "Sedan", 43295),
+(108, "Honda", "Ridgeline", "Truck", 38800),
+(109, "Honda", "Pilot", "SUV", 35950),
+(110, "Honda", "CR-V Hybrid", "SUV", 32400),
+(111, "Honda", "Accord Hybrid", "Sedan", 31345),
+(112, "Honda", "HR-V", "SUV", 23800),
+(113, "Honda", "Odyssey", "Minivan", 37490),
+(114, "Honda", "Insight", "Sedan", 25760),
+(115, "Ford", "Explorer", "SUV", 53070);
+
+
+--Display the database ordered by price. 
+SELECT * 
+FROM cars 
+ORDER BY price desc;
+
+--What is the average price of Honda cars?
+SELECT brand, AVG(price) AS "average price"
+FROM cars
+WHERE brand = 'Honda';
+
+--What are the most expensive models from each brand?
+SELECT brand, model, MAX(price) AS "maximum price" 
+FROM cars
+GROUP BY brand;
+
