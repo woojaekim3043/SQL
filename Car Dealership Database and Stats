@@ -1,4 +1,5 @@
 --Create a car dealership database.
+
 CREATE TABLE cars (id INTEGER PRIMARY KEY, brand TEXT, model TEXT, type TEXT, price INTEGER);
 
 INSERT INTO cars VALUES
