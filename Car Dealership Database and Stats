@@ -37,3 +37,4 @@ SELECT brand, model, MAX(price) AS "maximum price"
 FROM cars
 GROUP BY brand;
 
+
