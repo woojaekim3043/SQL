@@ -25,10 +25,12 @@ SELECT *
 FROM cars 
 ORDER BY price desc;
 
+
 --What is the average price of Honda cars?
 SELECT brand, AVG(price) AS "average price"
 FROM cars
 WHERE brand = 'Honda';
+
 
 --What are the most expensive models from each brand?
 SELECT brand, model, MAX(price) AS "maximum price" 
