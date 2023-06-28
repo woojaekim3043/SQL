@@ -1,0 +1,70 @@
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. 
+
+--How many orders were placed in January?
+SELECT COUNT(*)
+FROM JanSales
+WHERE length(orderID) = 6
+AND orderID IS NOT NULL
+AND orderID <> 'Order ID';
+
+
+--How many of those orders were for an iPhone?
+SELECT COUNT(*)
+FROM JanSales
+WHERE length(orderID) = 6
+AND orderID IS NOT NULL
+AND orderID <> 'Order ID'
+AND Product = 'iPhone';
+
+
+--Select the customer account numbers for all the orders that were placed in February.
+SELECT DISTINCT c.acctnum
+FROM customers c
+JOIN FebSales f
+ON c.order_id = f.orderID 
+WHERE length(f.orderID) = 6
+AND f.orderID IS NOT NULL
+AND f.orderID <> 'Order ID';
+
+
+--Which product was the cheapest one sold in January, and what was the price?
+SELECT DISTINCT product, price
+FROM JanSales
+WHERE price IN (SELECT MIN(price) FROM JanSales);
+
+SELECT DISTINCT product, price
+FROM JanSales
+ORDER BY price ASC
+LIMIT 1;
+
+SELECT distinct product, MIN(price)
+FROM JanSales
+GROUP BY product
+ORDER BY price ASC 
+LIMIT 1;
+
+
+--What is the total revenue for each product sold in January?
+SELECT Product, SUM(Quantity*price) AS Total_Revenue
+FROM JanSales
+GROUP BY Product;
+
+
+--Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+SELECT product, SUM(Quantity), SUM(Quantity)*price AS total_revenue
+FROM FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY product;
+
+
+--How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+SELECT COUNT(DISTINCT c.acctnum), AVG(Quantity*price)
+FROM customers c
+  JOIN FebSales f
+  ON c.order_id = f.orderID
+WHERE f.Quantity>2
+AND length(f.Quantity) = 1
+AND f.Quantity IS NOT NULL
+AND f.Quantity <> ''
+AND f.Quantity <> 'Quantity Ordered';
+
