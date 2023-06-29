@@ -1,13 +1,13 @@
 #In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. 
 
---How many orders were placed in January?
+#1. How many orders were placed in January?
 SELECT COUNT(*)
 FROM JanSales
 WHERE length(orderID) = 6
 AND orderID IS NOT NULL
 AND orderID <> 'Order ID';
 
---How many of those orders were for an iPhone?
+#2. How many of those orders were for an iPhone?
 SELECT COUNT(*)
 FROM JanSales
 WHERE length(orderID) = 6
@@ -15,7 +15,7 @@ AND orderID IS NOT NULL
 AND orderID <> 'Order ID'
 AND Product = 'iPhone';
 
---Select the customer account numbers for all the orders that were placed in February.
+#3. Select the customer account numbers for all the orders that were placed in February.
 SELECT DISTINCT c.acctnum
 FROM customers c
 JOIN FebSales f
@@ -24,7 +24,7 @@ WHERE length(f.orderID) = 6
 AND f.orderID IS NOT NULL
 AND f.orderID <> 'Order ID';
 
---Which product was the cheapest one sold in January, and what was the price?
+#4. Which product was the cheapest one sold in January, and what was the price?
 SELECT DISTINCT product, price
 FROM JanSales
 WHERE price IN (SELECT MIN(price) FROM JanSales);
@@ -40,18 +40,18 @@ GROUP BY product
 ORDER BY price ASC 
 LIMIT 1;
 
---What is the total revenue for each product sold in January?
+#5. What is the total revenue for each product sold in January?
 SELECT Product, SUM(Quantity*price) AS Total_Revenue
 FROM JanSales
 GROUP BY Product;
 
---Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+#6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
 SELECT product, SUM(Quantity), SUM(Quantity)*price AS total_revenue
 FROM FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY product;
 
---How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+#7. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
 SELECT COUNT(DISTINCT c.acctnum), AVG(Quantity*price)
 FROM customers c
   JOIN FebSales f
@@ -62,13 +62,13 @@ AND f.Quantity IS NOT NULL
 AND f.Quantity <> ''
 AND f.Quantity <> 'Quantity Ordered';
 
---List all the products sold in Los Angeles in February, and include how many of each were sold.
+#8. List all the products sold in Los Angeles in February, and include how many of each were sold.
 SELECT DISTINCT Product, SUM(Quantity)
 FROM FebSales
 WHERE location LIKE '%Los Angeles%'
 GROUP BY Product;
 
---Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
+#9. Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
 SELECT DISTINCT location, COUNT(orderID)
 FROM JanSales
 WHERE location LIKE '%NY%'
@@ -79,13 +79,13 @@ AND orderID <> 'Order ID'
 GROUP BY location
 HAVING COUNT(orderID)>=3;
 
---How many of each type of headphones were sold in February?
+#10. How many of each type of headphones were sold in February?
 SELECT DISTINCT Product, SUM(Quantity)
 FROM FebSales
 WHERE Product LIKE '%headphone%'
 GROUP BY Product;
 
---What was the average amount spent per account in February?
+#11. What was the average amount spent per account in February?
 SELECT SUM(f.Quantity*f.price)/COUNT(c.acctnum) AS average_amount_spent
 FROM customers c
     JOIN FebSales f
@@ -93,7 +93,7 @@ FROM customers c
 WHERE length(orderid) = 6 
 AND orderid <> 'Order ID';
 
---What was the average quantity of products purchased per account in February?
+#12. What was the average quantity of products purchased per account in February?
 SELECT SUM(f.Quantity)/COUNT(c.acctnum) AS average_quantity_purchased
 FROM customers c
     JOIN FebSales f
@@ -101,7 +101,7 @@ FROM customers c
 WHERE length(orderid) = 6 
 AND orderid <> 'Order ID';
 
---Which product brought in the most revenue in January and how much revenue did it bring in total?
+#13. Which product brought in the most revenue in January and how much revenue did it bring in total?
 SELECT DISTINCT j.Product, SUM(Quantity*price) AS revenue
 FROM JanSales j
 WHERE length(orderid) = 6 
