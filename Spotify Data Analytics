@@ -95,3 +95,17 @@ LIMIT 1;
 SELECT track_name, instrumentalness
 FROM Spotifydata
 WHERE instrumentalness = (SELECT MAX(instrumentalness) FROM Spotifydata);
+
+#11. Among the top 10 artists based on popularity, which artist has the highest average valence score for their tracks?
+SELECT artist_name, AVG(valence) AS average_valence
+FROM Spotifydata
+WHERE artist_name IN (
+    SELECT artist_name 
+    FROM Spotifydata 
+    ORDER BY popularity DESC 
+    LIMIT 10
+    )
+GROUP BY artist_name
+ORDER BY AVG(valence) DESC
+LIMIT 1;
+
