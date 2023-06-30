@@ -1,5 +1,6 @@
 # In this SQL, I'm querying a database with multiple tables to uncover valuable insights into customer behavior, sales trends, and invoicing patterns.
 
+
 #1. Show Customers (their full names, customer ID, and country) who are not in the US. (Hint: != or <> can be used to say "is not equal to").
 
 SELECT FirstName, LastName, CustomerId, Country
